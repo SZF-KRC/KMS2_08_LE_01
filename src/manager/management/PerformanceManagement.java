@@ -1,6 +1,7 @@
 package manager.management;
 
 import manager.control.InputControl;
+import manager.control.SqlControl;
 import manager.interfaces.IEmployeeService;
 import manager.model.Employee;
 import manager.model.PerformanceReview;
@@ -13,15 +14,18 @@ public class PerformanceManagement {
     private InputControl control;
     private IEmployeeService employeeService;
     private PerformanceService performanceService;
+    private SqlControl sqlControl;
 
-    public PerformanceManagement(InputControl control, IEmployeeService employeeService, PerformanceService performanceService) {
+    public PerformanceManagement(InputControl control, IEmployeeService employeeService, PerformanceService performanceService, SqlControl sqlControl) {
         this.control = control;
         this.employeeService = employeeService;
         this.performanceService = performanceService;
+        this.sqlControl = sqlControl;
     }
 
     public void addPerformanceReview() {
-        int employeeId = control.intEntry("Enter Employee ID for performance review: ");
+        Integer employeeId = getValidEmployeeId("performance review");
+        if (employeeId == null){return;}
         String review = control.stringEntry("Enter performance review: ");
         int score = control.intEntry("Enter performance score (1-10): ");
         Date reviewDate = new Date();
@@ -32,17 +36,24 @@ public class PerformanceManagement {
     }
 
     public void listPerformanceReviews() {
-        int employeeId = control.intEntry("Enter Employee ID to list performance reviews: ");
-        performanceService.getPerformanceReviewsForEmployee(employeeId).forEach(System.out::println);
+        Integer employeeId = getValidEmployeeId("list performance reviews");
+        if (employeeId != null){performanceService.getPerformanceReviewsForEmployee(employeeId).forEach(System.out::println);}
     }
 
     public void trackGoals() {
-        int employeeId = control.intEntry("Enter Employee ID to track goals: ");
+        Integer employeeId = getValidEmployeeId("track goals");
+        if (employeeId == null){return;}
         String goal = control.stringEntry("Enter goal: ");
         Date startDate = new Date();
         Date endDate = control.dateEntry("Enter goal end date (yyyy-mm-dd): ");
 
         performanceService.trackGoals(employeeId, goal, startDate, endDate);
         System.out.println("Goal tracked for employee ID: " + employeeId);
+    }
+    private Integer getValidEmployeeId(String prompt){
+        if (!sqlControl.anyEmployeeExists()){ System.out.println("No Employees in the Database");return null; }
+        int employeeId = control.intEntry("Enter Employee ID to " + prompt + ": ");
+        if (!sqlControl.employeeExists(employeeId)){System.out.println("Employee with ID: " + employeeId + " does not exist.");return null;}
+        return employeeId;
     }
 }

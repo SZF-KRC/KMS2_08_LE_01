@@ -18,7 +18,7 @@ public class Menu {
     AdministrationPayroll administration = new AdministrationPayroll(payrollService,control,employeeService,sqlControl);
     VacationAndAbsence vacationAndAbsence = new VacationAndAbsence(control,new VacationAndAbsenceService(), sqlControl);
     TrainingAndFurtherEducation trainingAndFurtherEducation = new TrainingAndFurtherEducation(control,new TrainingService());
-    PerformanceManagement performanceManagement = new PerformanceManagement(control,employeeService,new PerformanceService());
+    PerformanceManagement performanceManagement = new PerformanceManagement(control,employeeService,new PerformanceService(), sqlControl);
 
 
 
