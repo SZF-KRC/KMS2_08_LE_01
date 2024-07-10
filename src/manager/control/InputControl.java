@@ -88,8 +88,6 @@ public class InputControl {
         return uniID;
     }
 
-
-
     // Check if the phone number matches the European format
     private boolean isValidPhoneNumber(String phoneNumber) {
         // Define the regex pattern for a valid European phone number

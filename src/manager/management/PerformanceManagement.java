@@ -2,23 +2,20 @@ package manager.management;
 
 import manager.control.InputControl;
 import manager.control.SqlControl;
-import manager.interfaces.IEmployeeService;
-import manager.model.Employee;
 import manager.model.PerformanceReview;
-import manager.services.EmployeeService;
 import manager.services.PerformanceService;
 
 import java.util.Date;
 
 public class PerformanceManagement {
     private InputControl control;
-    private IEmployeeService employeeService;
+
     private PerformanceService performanceService;
     private SqlControl sqlControl;
 
-    public PerformanceManagement(InputControl control, IEmployeeService employeeService, PerformanceService performanceService, SqlControl sqlControl) {
+    public PerformanceManagement(InputControl control, PerformanceService performanceService, SqlControl sqlControl) {
         this.control = control;
-        this.employeeService = employeeService;
+
         this.performanceService = performanceService;
         this.sqlControl = sqlControl;
     }
