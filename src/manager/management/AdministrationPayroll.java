@@ -1,5 +1,6 @@
 package manager.management;
 
+import manager.control.DataControl;
 import manager.control.InputControl;
 import manager.control.SqlControl;
 import manager.interfaces.IEmployeeService;
@@ -11,17 +12,30 @@ public class AdministrationPayroll {
     private InputControl control;
     private IEmployeeService employeeService;
     private SqlControl sqlControl;
+    private DataControl dataControl;
 
-    public AdministrationPayroll(IPayrollService payrollService, InputControl control, IEmployeeService employeeService, SqlControl sqlControl) {
+    public AdministrationPayroll(IPayrollService payrollService, InputControl control, IEmployeeService employeeService, SqlControl sqlControl,DataControl dataControl) {
         this.control = control;
         this.payrollService = payrollService;
         this.employeeService = employeeService;
         this.sqlControl = sqlControl;
+        this.dataControl = dataControl;
     }
 
     public void generatePayroll() {
         Integer employeeId = getValidEmployeeId("payroll generation");
         if (employeeId == null){return;}
+
+        if (!dataControl.isEmployeeCheckedOut(employeeId)) {
+            System.out.println("Employee has not checked out yet.");
+            return;
+        }
+
+        if (dataControl.isEmployeeOnBreak(employeeId)) {
+            System.out.println("Employee is currently on break.");
+            return;
+        }
+
         Employee employee = employeeService.getAllEmployees().stream()
                 .filter(e -> e.getId() == employeeId)
                 .findFirst()
@@ -37,6 +51,9 @@ public class AdministrationPayroll {
     public void calculateTaxDeductionForEmployee() {
         Integer employeeId = getValidEmployeeId("calculate tax deduction");
         if (employeeId == null){return;}
+        if (!dataControl.isEmployeeCheckedOut(employeeId)) {System.out.println("Employee has not checked out yet.");return;}
+        if (dataControl.isEmployeeOnBreak(employeeId)) {System.out.println("Employee is currently on break.");return;}
+
         Employee employee = employeeService.getAllEmployees().stream()
                 .filter(e -> e.getId() == employeeId)
                 .findFirst()

@@ -1,4 +1,5 @@
 package manager.menu;
+import manager.control.DataControl;
 import manager.control.InputControl;
 import manager.control.SqlControl;
 import manager.interfaces.IEmployeeService;
@@ -11,11 +12,13 @@ public class Menu {
     IPayrollService payrollService = new PayrollService();
     InputControl control = new InputControl();
     SqlControl sqlControl = new SqlControl();
+    DataControl dataControl = new DataControl();
 
     IEmployeeService employeeService = new EmployeeService();
+
     IPersonnelRecords personnelRecords = new PersonnelRecords(control,employeeService,sqlControl);
     WorkTime workTime = new WorkTime(new WorkTimeService(),control, payrollService,sqlControl);
-    AdministrationPayroll administration = new AdministrationPayroll(payrollService,control,employeeService,sqlControl);
+    AdministrationPayroll administration = new AdministrationPayroll(payrollService,control,employeeService,sqlControl, dataControl);
     VacationAndAbsence vacationAndAbsence = new VacationAndAbsence(control,new VacationAndAbsenceService(), sqlControl);
     TrainingAndFurtherEducation trainingAndFurtherEducation = new TrainingAndFurtherEducation(control,new TrainingService());
     PerformanceManagement performanceManagement = new PerformanceManagement(control,new PerformanceService(), sqlControl);
@@ -138,12 +141,14 @@ public class Menu {
             System.out.println("1. Add Performance Review");
             System.out.println("2. List Performance Reviews");
             System.out.println("3. Track Goals");
+            System.out.println("4. List Goals");
             switch (control.intEntry("Enter index of your choice: ")) {
                 case 0:exit = true;break;
                 case 1:performanceManagement.addPerformanceReview();break;
                 case 2:performanceManagement.listPerformanceReviews();break;
                 case 3:performanceManagement.trackGoals(); break;
-                default:printDefaultAnswer(3); break;
+                case 4:performanceManagement.listGoals();break;
+                default:printDefaultAnswer(4); break;
             }
         }
     }

@@ -23,7 +23,7 @@ public class PerformanceManagement {
     public void addPerformanceReview() {
         Integer employeeId = getValidEmployeeId("performance review");
         if (employeeId == null){return;}
-        String review = control.stringEntry("Enter performance review: ");
+        String review = control.textEntry("Enter performance review: ");
         int score = control.intEntry("Enter performance score (1-10): ");
         Date reviewDate = new Date();
 
@@ -40,13 +40,21 @@ public class PerformanceManagement {
     public void trackGoals() {
         Integer employeeId = getValidEmployeeId("track goals");
         if (employeeId == null){return;}
-        String goal = control.stringEntry("Enter goal: ");
+        String goal = control.textEntry("Enter goal: ");
         Date startDate = new Date();
         Date endDate = control.dateEntry("Enter goal end date (yyyy-mm-dd): ");
 
         performanceService.trackGoals(employeeId, goal, startDate, endDate);
         System.out.println("Goal tracked for employee ID: " + employeeId);
     }
+
+    public void listGoals() {
+        Integer employeeId = getValidEmployeeId("list goals");
+        if (employeeId != null) {
+            performanceService.getGoalsForEmployee(employeeId).forEach(System.out::println);
+        }
+    }
+
     private Integer getValidEmployeeId(String prompt){
         if (!sqlControl.anyEmployeeExists()){ System.out.println("No Employees in the Database");return null; }
         int employeeId = control.intEntry("Enter Employee ID to " + prompt + ": ");

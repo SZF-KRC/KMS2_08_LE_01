@@ -62,6 +62,21 @@ public class InputControl {
         return phoneNumber;
     }
 
+    public String textEntry(String prompt){
+        System.out.print(prompt);
+        boolean exit= false;
+        String line="";
+        while (!exit){
+            line = entry.nextLine();
+            if (line.isEmpty()){
+                System.out.print("--- Input cannot be empty. Please try again --- :");
+            } else {
+                exit=true;
+            }
+        }
+        return line;
+    }
+
     public String stringEntry(String prompt) {
         System.out.print(prompt);
         boolean exit= false;

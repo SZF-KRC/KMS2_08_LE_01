@@ -1,6 +1,7 @@
 package manager.services;
 
 import manager.database.DatabaseConnection;
+import manager.model.Goal;
 import manager.model.PerformanceReview;
 
 import java.sql.*;
@@ -60,4 +61,27 @@ public class PerformanceService {
             e.printStackTrace();
         }
     }
+
+    public List<Goal> getGoalsForEmployee(int employeeId) {
+        List<Goal> goals = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT * FROM Goals WHERE employeeId = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, employeeId);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String goal = resultSet.getString("goal");
+                        Date startDate = resultSet.getDate("startDate");
+                        Date endDate = resultSet.getDate("endDate");
+                        goals.add(new Goal(id, employeeId, goal, startDate, endDate));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return goals;
+    }
+
 }
