@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 
 public class InputControl {
     private final Scanner entry = new Scanner(System.in);
-    private static final HashSet<Integer> uniqueID = new HashSet<>();
-    private Random random = new Random();
 
     // universal control if user input is integer number
     public int intEntry(String prompt){
@@ -92,15 +90,6 @@ public class InputControl {
             }
         }
         return line;
-    }
-    // generate random unique ID
-    public int generateUniqueID() {
-        int uniID;
-        do {
-            uniID = 1000 + random.nextInt(9000); // Generate a random 4-digit number
-        } while (uniqueID.contains(uniID));
-        uniqueID.add(uniID);
-        return uniID;
     }
 
     // Check if the phone number matches the European format

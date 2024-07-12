@@ -53,9 +53,7 @@ public class PersonnelRecords implements IPersonnelRecords {
     }
     public void listAllEmployees() {
         if (!sqlControl.anyEmployeeExists()){ System.out.println("No Employees in the Database");return;}
-        for (Employee employee : employeeService.getAllEmployees()) {
-            System.out.println(employee);
-        }
+        employeeService.getAllEmployees().forEach(System.out::println);
     }
 
     private Integer getValidEmployeeId(String prompt){

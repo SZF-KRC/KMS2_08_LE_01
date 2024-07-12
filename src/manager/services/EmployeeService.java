@@ -1,6 +1,5 @@
 package manager.services;
 
-import manager.control.SqlControl;
 import manager.database.DatabaseConnection;
 import manager.interfaces.IEmployeeService;
 import manager.model.FullTimeEmployee;

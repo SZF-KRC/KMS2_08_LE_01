@@ -20,7 +20,7 @@ public class Menu {
     WorkTime workTime = new WorkTime(new WorkTimeService(),control, payrollService,sqlControl);
     AdministrationPayroll administration = new AdministrationPayroll(payrollService,control,employeeService,sqlControl, dataControl);
     VacationAndAbsence vacationAndAbsence = new VacationAndAbsence(control,new VacationAndAbsenceService(), sqlControl);
-    TrainingAndFurtherEducation trainingAndFurtherEducation = new TrainingAndFurtherEducation(control,new TrainingService());
+    TrainingAndFurtherEducation trainingAndFurtherEducation = new TrainingAndFurtherEducation(control,new TrainingService(),sqlControl);
     PerformanceManagement performanceManagement = new PerformanceManagement(control,new PerformanceService(), sqlControl);
 
 
@@ -162,6 +162,9 @@ public class Menu {
             System.out.println("2. Update Training");
             System.out.println("3. Delete Training");
             System.out.println("4. List All Trainings");
+            System.out.println("5. Add Employee to Training");
+            System.out.println("6. Remove Employee from Training");
+            System.out.println("7. List Employees for Training");
             switch (control.intEntry("Enter index of your choice: ")) {
                 case 0:
                     exit = true;
@@ -170,7 +173,10 @@ public class Menu {
                 case 2:trainingAndFurtherEducation.updateTraining();break;
                 case 3:trainingAndFurtherEducation.deleteTraining();break;
                 case 4:trainingAndFurtherEducation.listAllTrainings();break;
-                default: printDefaultAnswer(4);
+                case 5:trainingAndFurtherEducation.addEmployeeToTraining();break;
+                case 6:trainingAndFurtherEducation.removeEmployeeFromTraining();break;
+                case 7:trainingAndFurtherEducation.listEmployeesForTraining();break;
+                default: printDefaultAnswer(7);
             }
         }
     }

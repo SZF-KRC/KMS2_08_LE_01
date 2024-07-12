@@ -39,4 +39,14 @@ public class Training {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "Training{" +
+                "trainingId=" + trainingId +
+                ", trainingName='" + trainingName + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

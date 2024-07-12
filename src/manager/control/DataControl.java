@@ -1,7 +1,6 @@
 package manager.control;
 
 import manager.database.DatabaseConnection;
-import manager.model.WorkingTime;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
