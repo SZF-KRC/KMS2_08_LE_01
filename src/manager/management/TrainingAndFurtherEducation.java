@@ -4,7 +4,6 @@ import manager.control.InputControl;
 import manager.control.SqlControl;
 import manager.model.Training;
 import manager.services.TrainingService;
-
 import java.util.Date;
 
 public class TrainingAndFurtherEducation {
